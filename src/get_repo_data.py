@@ -10,6 +10,9 @@ repos_url = "https://api.github.com/users/TorrezMN/repos"
 REPO_LANG = None
 
 
+repos = []
+
+
 def get_branches(rep):
     """Gets the list of branches of a repo."""
     branches_url = f"https://api.github.com/repos/TorrezMN/{rep}/branches"
@@ -40,14 +43,16 @@ def get_repos():
 
     for i in new_data:
         if not i["fork"]:
-            print("DATA -> ", i["name"])
+            repos.append(i)
 
 
-#  GET REPOS
 get_repos()
-#  SAVE REPO DATA
-#  save_data()
-#  GET REPO LANGS
-print(get_langs("PlaceHolder_FA"))
-#  GET BRANCHES OF A REPO
-print(get_branches("Data_Science"))
+
+
+for i in repos:
+    print("NOMBRE -> ", i["name"])
+    print("URL -> ", i["html_url"])
+    print("DESCRIPCION : ", i["description"])
+    print("FORK : ", i["fork"])
+    print("URL : ", i["url"])
+    print("ESTRELLAS : ", i["stargazers_count"])
