@@ -5,14 +5,23 @@
 import json
 import requests
 
-REPOS_URL = "https://api.github.com/users/TorrezMN/repos"
+repos_url = "https://api.github.com/users/TorrezMN/repos"
 
 REPO_LANG = None
 
 
+def get_branches(rep):
+    """Gets the list of branches of a repo."""
+    branches_url = f"https://api.github.com/repos/TorrezMN/{rep}/branches"
+    branches_data = requests.get(branches_url)
+    return json.loads(branches_data.text)
+
+
 def get_langs(rep):
     """Gets a list of languagues used in the repo."""
-    langs_url = requests.get(f"https://api.github.com/repos/TorrezMN/{rep}/languages")
+    languages_url = f"https://api.github.com/repos/TorrezMN/{rep}/languages"
+    langs_data = requests.get(languages_url)
+    return json.loads(langs_data.text)
 
 
 def save_data():
@@ -23,7 +32,9 @@ def save_data():
 def get_repos():
     """Gets a full list of my repos."""
 
-    data = requests.get(REPOS_URL)
+    data = requests.get(repos_url)
+
+    global new_data
 
     new_data = json.loads(data.text)
 
@@ -32,6 +43,11 @@ def get_repos():
             print("DATA -> ", i["name"])
 
 
+#  GET REPOS
 get_repos()
-
-get_langs("PlaceHolder_FA")
+#  SAVE REPO DATA
+#  save_data()
+#  GET REPO LANGS
+print(get_langs("PlaceHolder_FA"))
+#  GET BRANCHES OF A REPO
+print(get_branches("Data_Science"))
